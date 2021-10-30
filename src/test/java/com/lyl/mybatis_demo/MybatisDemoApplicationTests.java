@@ -21,9 +21,17 @@ class MybatisDemoApplicationTests {
     @Resource
     private DeptDao deptDao;
 
-    /**
-     * 批量初始化员工数据
-     */
+    @Test
+    void testInsertDept(){
+        List<Dept> deptList = new ArrayList<>();
+        deptList.add(new Dept().setName("开发部").setDescript("开发新产品"));
+        deptList.add(new Dept().setName("采购部").setDescript("采购企业所需的用品"));
+        deptList.add(new Dept().setName("财务部").setDescript("管理企业的财务"));
+        deptList.add(new Dept().setName("人事部").setDescript("为企业招聘人才"));
+        deptList.add(new Dept().setName("销售部").setDescript("销售公司开发出的产品"));
+        deptDao.insertBatch(deptList);
+    }
+
     @Test
     void testInsert() {
         Faker faker = new Faker(Locale.CHINA);
@@ -47,20 +55,6 @@ class MybatisDemoApplicationTests {
         System.out.println("i = " + i);
         end = System.currentTimeMillis();
         System.out.println("批量插入-运行时间:" + (end - start) + "ms");
-    }
-
-    /**
-     * 批量插入部门数据
-     */
-    @Test
-    void testInsertDept(){
-        List<Dept> deptList = new ArrayList<>();
-        deptList.add(new Dept().setName("开发部").setDescript("开发新产品"));
-        deptList.add(new Dept().setName("采购部").setDescript("采购企业所需的用品"));
-        deptList.add(new Dept().setName("财务部").setDescript("管理企业的财务"));
-        deptList.add(new Dept().setName("人事部").setDescript("为企业招聘人才"));
-        deptList.add(new Dept().setName("销售部").setDescript("销售公司开发出的产品"));
-        deptDao.insertBatch(deptList);
     }
 
 }
