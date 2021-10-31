@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * (Emp)表控制层
@@ -40,6 +42,12 @@ public class EmpController {
      */
     @GetMapping("{id}")
     public Result selectOne(@PathVariable Serializable id) {
+        ExecutorService es = Executors.newFixedThreadPool(200);
+        for (int i = 0; i < 500; i++) {
+            es.submit(()->{
+                empService.selectOne(id);
+            });
+        }
         return empService.selectOne(id);
     }
 
